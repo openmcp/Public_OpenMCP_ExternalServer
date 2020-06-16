@@ -1,8 +1,9 @@
 #!/bin/bash
 rm -rf /etc/pki/etcd-ca
 
-MY_ADDRESS=`hostname -I`
-MY_ADDRESS=`echo $MY_ADDRESS | sed -e 's/^ *//g' -e 's/ *$//g'`
+#MY_ADDRESS=`hostname -I`
+#MY_ADDRESS=`echo $MY_ADDRESS | sed -e 's/^ *//g' -e 's/ *$//g'`
+MY_ADDRESS=`ip route get 8.8.8.8 | head -1 | cut -d' ' -f8`
 ORG_DIR=`pwd`
 
 # wget Insert

@@ -6,7 +6,7 @@ OS="Ubuntu16.04"
 
 # apt Update & Upgrade
 apt update
-apt upgrade
+apt upgrade -y
 
 
 # package Install
@@ -16,12 +16,12 @@ apt-get install -y virtualenv
 
 # Install MariaDB Server
 sudo apt-get install -y software-properties-common
-if [$OS=="Ubuntu18.04"]
+if [ $OS == "Ubuntu18.04" ]
 then
 	## For Ubuntu 18.04
 	sudo apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc'
 	sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mirrors.nxthost.com/mariadb/repo/10.3/ubuntu bionic main'
-elif [$OS=="Ubuntu16.04"]
+elif [ $OS == "Ubuntu16.04" ]
 then
 	## For Ubuntu 16.04
 	sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
@@ -48,12 +48,12 @@ mysql -uroot -pketilinux powerdns < powerdns.sql
 systemctl disable systemd-resolved
 systemctl stop systemd-resolved
 
-# ReCreate Resolve.conf 
+# ReCreate Resolve.conf
 unlink /etc/resolv.conf
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
 
 # Pdns Install
-if [$OS=="Ubuntu18.04"]
+if [ $OS == "Ubuntu18.04" ]
 then
 	## For Ubuntu 18.04
 	echo "deb [arch=amd64] http://repo.powerdns.com/ubuntu bionic-auth-41 main" > /etc/apt/sources.list.d/pdns.list
@@ -67,11 +67,11 @@ apt install pdns-server pdns-backend-mysql pdns-backend-geoip -y
 cp pdns.local.gmysql.conf /etc/powerdns/pdns.d/pdns.local.gmysql.conf
 
 # Pdns Conf Setting
-if [$OS=="Ubuntu16.04"]
+if [ $OS == "Ubuntu16.04" ]
 then
 	## For Ubuntu 16.04
 	cp pdns.conf.16 /etc/powerdns/pdns.conf
-elif [$OS=="Ubuntu18.04"]
+elif [ $OS == "Ubuntu18.04" ]
 then
 	## For Ubuntu 18.04
 	cp pdns.conf.18 /etc/powerdns/pdns.conf
@@ -83,7 +83,7 @@ sed -i "s/<IPADDRESS>/${MY_ADDRESS}/" /etc/powerdns/pdns.conf
 # Pdns Geo Setting
 cp zone /etc/powerdns/zone
 
-if [$OS=="Ubuntu16.04"]
+if [ $OS == "Ubuntu16.04" ]
 then
 	sudo sed -i 's/^dns=dnsmasq/#&/' /etc/NetworkManager/NetworkManager.conf
 	sudo service network-manager restart
@@ -114,14 +114,14 @@ apt-get install -y yarn
 mkdir -p /opt/web
 cp -r powerdns-admin /opt/web/
 
-# Install Package for PowerDNS 
+# Install Package for PowerDNS
 cd /opt/web/powerdns-admin
 virtualenv -p python3 flask
 source flask/bin/activate
 apt-get install -y libxml2-dev libxmlsec1-dev libxmlsec1-openssl
 pip install -r requirements.txt
 
-if [$OS == "Ubuntu16.04"]
+if [ $OS == "Ubuntu16.04" ]
 then
 	pip install werkzeug==0.16.0
 	pip install authlib
@@ -173,7 +173,7 @@ systemctl reload nginx
 # powerdns-recursor (외부도메인도 사용할수 있게 해줌)
 apt-get install -y pdns-recursor
 cp recursor.conf /etc/powerdns/recursor.conf
-echo "recursor=127.0.0.1:5678" > /etc/powerdns/pdns.d/pdns.local.gmysql.conf
+echo "recursor=127.0.0.1:5678" >> /etc/powerdns/pdns.d/pdns.local.gmysql.conf
 
 systemctl daemon-reload
 systemctl restart pdns
