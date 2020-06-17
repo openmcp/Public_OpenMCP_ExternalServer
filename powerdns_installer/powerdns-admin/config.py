@@ -20,7 +20,7 @@ UPLOAD_DIR = os.path.join(basedir, 'upload')
 
 # DATABASE CONFIG
 SQLA_DB_USER = 'powerdns'
-SQLA_DB_PASSWORD = 'ketilinux'
+SQLA_DB_PASSWORD = 'changeme'
 SQLA_DB_HOST = '127.0.0.1'
 SQLA_DB_PORT = 3306
 SQLA_DB_NAME = 'powerdns'

@@ -4,6 +4,9 @@ ORG_DIR=`pwd`
 OS="Ubuntu16.04"
 #OS="Ubuntu18.04"
 
+# PASSWORD
+PW="changeme"
+
 # apt Update & Upgrade
 apt update
 apt upgrade -y
@@ -31,17 +34,17 @@ fi
 sudo apt update
 
 export DEBIAN_FRONTEND=noninteractive
-debconf-set-selections <<< 'mariadb-server-5.5 mysql-server/root_password password ketilinux'
-debconf-set-selections <<< 'mariadb-server-5.5 mysql-server/root_password_again password ketilinux'
+debconf-set-selections <<< 'mariadb-server-5.5 mysql-server/root_password password $PW'
+debconf-set-selections <<< 'mariadb-server-5.5 mysql-server/root_password_again password $PW'
 
 sudo apt-get install mariadb-server mariadb-client -y
 
 
 # DB "powedns" Create & Insert
-mysql -uroot -pketilinux -e "CREATE DATABASE powerdns"
-mysql -uroot -pketilinux -e "GRANT ALL ON powerdns.* TO 'powerdns'@'localhost' IDENTIFIED BY 'ketilinux'"
-mysql -uroot -pketilinux -e "FLUSH PRIVILEGES"
-mysql -uroot -pketilinux powerdns < powerdns.sql
+mysql -uroot -P$PW -e "CREATE DATABASE powerdns"
+mysql -uroot -p$PW -e "GRANT ALL ON powerdns.* TO 'powerdns'@'localhost' IDENTIFIED BY '$PW'"
+mysql -uroot -p$PW -e "FLUSH PRIVILEGES"
+mysql -uroot -p$PW powerdns < powerdns.sql
 
 
 # resoved Service Stop
@@ -116,6 +119,8 @@ cp -r powerdns-admin /opt/web/
 
 # Install Package for PowerDNS
 cd /opt/web/powerdns-admin
+sed -i 's/changeme/'$PW'/g' config.py
+
 virtualenv -p python3 flask
 source flask/bin/activate
 apt-get install -y libxml2-dev libxmlsec1-dev libxmlsec1-openssl
@@ -140,8 +145,8 @@ fi
 
 
 # DB Schema Create
-mysql -uroot -pketilinux -D powerdns -e "DROP TABLE account"
-mysql -uroot -pketilinux -D powerdns -e "DROP TABLE domain_template"
+mysql -uroot -P$PW -D powerdns -e "DROP TABLE account"
+mysql -uroot -P$PW -D powerdns -e "DROP TABLE domain_template"
 
 export FLASK_APP=app/__init__.py
 flask db upgrade

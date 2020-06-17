@@ -20,6 +20,11 @@ cd etcd_installer
 
 # PowerDNS 설치
 cd powerdns_installer
+
+## PASSWORD Change
+vi install.sh 
+PW="changeme"
+
 ./install.sh
 ```
 
