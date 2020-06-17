@@ -34,8 +34,8 @@ fi
 sudo apt update
 
 export DEBIAN_FRONTEND=noninteractive
-debconf-set-selections <<< 'mariadb-server-5.5 mysql-server/root_password password $PW'
-debconf-set-selections <<< 'mariadb-server-5.5 mysql-server/root_password_again password $PW'
+debconf-set-selections <<< 'mariadb-server-5.5 mysql-server/root_password password '$PW
+debconf-set-selections <<< 'mariadb-server-5.5 mysql-server/root_password_again password '$PW
 
 sudo apt-get install mariadb-server mariadb-client -y
 
