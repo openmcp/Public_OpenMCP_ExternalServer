@@ -42,6 +42,15 @@ systemctl status etcd
 systemctl status etcd_clone
 
 # PowerDNS
+# Service 가동 여부 확인
+systemctl status pdns
+systemctl status pdns-recursor
+systemctl status powerdns-admin
+
+# URL 접속 확인
+MY_ADDRESS=`ip route get 8.8.8.8 | head -1 | cut -d' ' -f8` # 본인 IP 조회
+http://$MY_ADDRESS:8081 # PDNS Server
+http://$MY_ADDRESS # PowerDNS Web UI(PwerDNS-admin)
 
 ```
 
