@@ -2,7 +2,7 @@
 
 ## Introduction of OpenMCP External Server
 
-> KETI에서 개발한 OpenMCP 플랫폼의 NFS, DNS, ETCD복제의 기능을 위한 외부 서버
+> KETI에서 개발한 OpenMCP 플랫폼의 NFS, DNS, ETCD(형상관리) 기능을 위한 외부 서버
 
 ## Requirement
 > Ubuntu 16.04 
