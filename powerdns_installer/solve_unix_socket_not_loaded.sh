@@ -5,7 +5,7 @@ mysqld_safe --skip-grant-tables &
 #mysql -uroot
 #use mysql;
 
-mysql -uroot -D mysql -e "update user set password=PASSWORD('ketilinux') where User='root'"
+mysql -uroot -D mysql -e "update user set password=PASSWORD('changeme') where User='root'"
 mysql -uroot -D mysql -e "update user set plugin='mysql_native_password'"
 
 #quit;

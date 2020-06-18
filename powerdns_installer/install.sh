@@ -1,5 +1,6 @@
 #!/bin/bash
-MY_ADDRESS=`hostname -I`
+# MY_ADDRESS=`hostname -I`
+MY_ADDRESS=`ip route get 8.8.8.8 | head -1 | cut -d' ' -f8`
 ORG_DIR=`pwd`
 OS="Ubuntu16.04"
 #OS="Ubuntu18.04"
@@ -41,7 +42,7 @@ sudo apt-get install mariadb-server mariadb-client -y
 
 
 # DB "powedns" Create & Insert
-mysql -uroot -P$PW -e "CREATE DATABASE powerdns"
+mysql -uroot -p$PW -e "CREATE DATABASE powerdns"
 mysql -uroot -p$PW -e "GRANT ALL ON powerdns.* TO 'powerdns'@'localhost' IDENTIFIED BY '$PW'"
 mysql -uroot -p$PW -e "FLUSH PRIVILEGES"
 mysql -uroot -p$PW powerdns < powerdns.sql
@@ -68,6 +69,7 @@ apt install pdns-server pdns-backend-mysql pdns-backend-geoip -y
 
 # Mysql Conf Setting
 cp pdns.local.gmysql.conf /etc/powerdns/pdns.d/pdns.local.gmysql.conf
+sed -i "s/changeme/${PW}/" /etc/powerdns/pdns.d/pdns.local.gmysql.conf
 
 # Pdns Conf Setting
 if [ $OS == "Ubuntu16.04" ]
