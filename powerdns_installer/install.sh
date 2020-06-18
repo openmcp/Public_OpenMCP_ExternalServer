@@ -128,27 +128,32 @@ source flask/bin/activate
 apt-get install -y libxml2-dev libxmlsec1-dev libxmlsec1-openssl
 pip install -r requirements.txt
 
-if [ $OS == "Ubuntu16.04" ]
-then
-	pip install werkzeug==0.16.0
-	pip install authlib
-	pip install flask_seasurf
-	pip install pytimeparse
-	pip install PyOpenSSL
-	pip install pytz
-	pip install lima
-	pip install pyyaml
-	pip install jsmin
-	pip install cssmin
-fi
+#if [ $OS == "Ubuntu16.04" ]
+#then
+#	pip install werkzeug==0.16.0
+#	pip install authlib
+#	pip install flask_seasurf
+#	pip install pytimeparse
+#	pip install PyOpenSSL
+#	pip install pytz
+#	pip install lima
+#	pip install pyyaml
+#	pip install jsmin
+#	pip install cssmin
+# pip install flask-migrate==2.2.1
+# pip install flask-login==0.4.1
+# pip install flask-assets==0.12
+# pip install flask-seasurf==0.2.2
+# pip install flask-sqlalchemy==2.3.2
+#fi
 
 # PowerDNS-Admin Setting
 # Done
 
 
 # DB Schema Create
-mysql -uroot -P$PW -D powerdns -e "DROP TABLE account"
-mysql -uroot -P$PW -D powerdns -e "DROP TABLE domain_template"
+mysql -uroot -p$PW -D powerdns -e "DROP TABLE account"
+mysql -uroot -p$PW -D powerdns -e "DROP TABLE domain_template"
 
 export FLASK_APP=app/__init__.py
 flask db upgrade
@@ -157,6 +162,8 @@ flask db upgrade
 flask db migrate -m "Init DB"
 
 # asset File Create
+curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+apt-get install -y nodejs
 yarn install --pure-lockfile
 flask assets build
 
