@@ -389,6 +389,7 @@ master=yes
 # negquery-cache-ttl	Seconds to store negative query results in the QueryCache
 #
 # negquery-cache-ttl=60
+negquery-cache-ttl=1
 
 #################################
 # no-shuffle	Set this to prevent random shuffling of answers - for regression testing
