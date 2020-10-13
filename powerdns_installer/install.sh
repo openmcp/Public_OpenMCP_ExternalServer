@@ -29,7 +29,7 @@ elif [ $OS == "Ubuntu16.04" ]
 then
 	## For Ubuntu 16.04
 	sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-	sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://ftp.utexas.edu/mariadb/repo/10.3/ubuntu xenial main'
+	sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mirrors.nxthost.com/mariadb/repo/10.3/ubunt xenial main'
 fi
 
 sudo apt update
