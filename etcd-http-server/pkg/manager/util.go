@@ -138,7 +138,7 @@ func RemoteCopyDir(host, srcpath, destpath string){
 	}
 }
 func RemoteDeleteDir(host, srcpath string){
-	cmdStr := "ssh "+host+" rm -rf "+ srcpath
+	cmdStr := "ssh -oStrictHostKeyChecking=no "+host+" rm -rf "+ srcpath
 	_, err := CmdExec(cmdStr)
 	if err != nil {
 		fmt.Println("Err !", err)
