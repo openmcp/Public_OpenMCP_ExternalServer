@@ -6,7 +6,7 @@ OS="Ubuntu16.04"
 #OS="Ubuntu18.04"
 
 # PASSWORD
-PW="changeme"
+PW="1234"
 
 # apt Update & Upgrade
 apt update
@@ -40,6 +40,9 @@ debconf-set-selections <<< 'mariadb-server-5.5 mysql-server/root_password_again 
 
 sudo apt-get install mariadb-server mariadb-client -y
 
+cp my.cnf /etc/mysql/my.cnf
+
+systemctl restart mysql
 
 # DB "powedns" Create & Insert
 mysql -uroot -p$PW -e "CREATE DATABASE powerdns"
